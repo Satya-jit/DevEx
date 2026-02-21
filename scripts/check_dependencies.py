@@ -77,7 +77,7 @@ def check_vulnerabilities() -> Tuple[List[Dict], bool]:
     
     try:
         result = subprocess.run(
-            ["safety", "check", "--json"],
+            ["safety", "check", "--output", "json"],
             capture_output=True,
             text=True
         )

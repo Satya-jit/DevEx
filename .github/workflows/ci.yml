@@ -111,7 +111,7 @@ jobs:
       - name: Run Safety vulnerability check
         run: |
           echo "::group::Safety Vulnerability Check"
-          safety check --json || true
+          safety check --output json || true
           safety check || echo "::warning::Some vulnerabilities found"
           echo "::endgroup::"
 
