@@ -25,9 +25,9 @@ class Colors:
 
 def print_section(title: str):
     """Print a formatted section header."""
-    print(f"\n{Colors.BOLD}{Colors.BLUE}{"=" * 60}{Colors.END}")
+    print(f"\n{Colors.BOLD}{Colors.BLUE}{'=' * 60}{Colors.END}")
     print(f"{Colors.BOLD}{Colors.BLUE}{title}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.BLUE}{"=" * 60}{Colors.END}\n")
+    print(f"{Colors.BOLD}{Colors.BLUE}{'=' * 60}{Colors.END}\n")
 
 
 def check_outdated_packages() -> Tuple[List[Dict], bool]:
@@ -50,7 +50,7 @@ def check_outdated_packages() -> Tuple[List[Dict], bool]:
 
         print(f"{Colors.YELLOW}Found {len(outdated)} outdated package(s):{Colors.END}\n")
 
-        print(f"{"Package":<20} {"Current":<15} {"Latest":<15} {"Type":<10}")
+        print(f"{'Package':<20} {'Current':<15} {'Latest':<15} {'Type':<10}")
         print("-" * 70)
 
         for pkg in outdated:
@@ -161,7 +161,7 @@ def generate_report(outdated: List[Dict], vulnerabilities: List[Dict]) -> Dict:
 def main():
     """Main execution function."""
     print(f"\n{Colors.BOLD}{Colors.HEADER}Dependency Health Check{Colors.END}")
-    print(f"Run at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n")
+    print(f"Run at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
     # Check for outdated packages
     outdated, has_outdated = check_outdated_packages()
