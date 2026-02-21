@@ -7,7 +7,6 @@ Falls back to mock mode if API key is not available.
 
 import os
 import sys
-import json
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -127,7 +126,10 @@ def generate_mock_documentation(codebase: dict) -> str:
 
 ## 1. Overview
 
-The DevEx Sample Service is a RESTful API built with Flask that provides a simple service status endpoint and a products API integration. This service demonstrates modern DevEx practices including containerization, automated testing, and CI/CD pipelines.
+The DevEx Sample Service is a RESTful API built with Flask that provides
+a simple service status endpoint and a products API integration. This
+service demonstrates modern DevEx practices including containerization,
+automated testing, and CI/CD pipelines.
 
 ### Purpose
 - Provide service health monitoring
