@@ -143,6 +143,23 @@ The project enforces code quality through:
 - **Bandit**: Security issue detection
 - **Safety**: Known vulnerability checks
 
+## AI Documentation Generation
+
+The project includes an AI-powered documentation generator:
+
+```bash
+# Generate documentation (requires API key)
+python scripts/generate_docs.py
+```
+
+### Setup (Optional):
+
+1. Get a free API key from [Groq](https://console.groq.com/)
+2. Add to GitHub Secrets: `GROQ_API_KEY`
+3. Or set locally: `export GROQ_API_KEY="your_key_here"`
+
+**Note:** If no API key is provided, the tool runs in **mock mode** and generates basic documentation without AI. The CI pipeline will not fail if the API key is missing.
+
 ## License
 
 MIT License

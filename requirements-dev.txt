@@ -7,6 +7,7 @@ pylint==3.0.3
 black==23.12.1
 safety==3.2.0
 bandit==1.7.6
+groq==0.4.2
 
-# Optional AI integration
+# Optional AI libraries# Optional AI integration
 openai==1.6.1

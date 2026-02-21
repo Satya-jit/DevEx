@@ -47,12 +47,12 @@ def read_codebase() -> dict:
     return codebase
 
 
-def generate_with_openai(codebase: dict, api_key: str) -> Optional[str]:
-    """Generate documentation using OpenAI API."""
+def generate_with_ai(codebase: dict, api_key: str) -> Optional[str]:
+    """Generate documentation using Groq API."""
     try:
-        import openai
+        from groq import Groq
 
-        openai.api_key = api_key
+        client = Groq(api_key=api_key)
 
         # Prepare prompt
         code_context = "\n\n".join(
@@ -77,10 +77,10 @@ Codebase:
 
 Generate a professional SDD.md document:"""
 
-        print(f"{Colors.BLUE}→ Calling OpenAI API...{Colors.END}")
+        print(f"{Colors.BLUE}→ Calling Groq API...{Colors.END}")
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        response = client.chat.completions.create(
+            model="llama-3.1-70b-versatile",
             messages=[
                 {"role": "system", "content": "You are a technical documentation expert."},
                 {"role": "user", "content": prompt},
@@ -92,10 +92,10 @@ Generate a professional SDD.md document:"""
         return response.choices[0].message.content
 
     except ImportError:
-        print(f"{Colors.YELLOW}⚠ OpenAI library not installed{Colors.END}")
+        print(f"{Colors.YELLOW}⚠ Groq library not installed{Colors.END}")
         return None
     except Exception as e:
-        print(f"{Colors.RED}✗ OpenAI API error: {e}{Colors.END}")
+        print(f"{Colors.RED}✗ Groq API error: {e}{Colors.END}")
         return None
 
 
@@ -374,18 +374,26 @@ def main():
     codebase = read_codebase()
     print(f"{Colors.GREEN}✓ Read {len(codebase)} files{Colors.END}\n")
 
-    # Check for API key
-    api_key = os.getenv("OPENAI_API_KEY")
+    # Check for API key (try Groq first, then OpenAI)
+    groq_api_key = os.getenv("GROQ_API_KEY")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
 
-    if api_key:
-        print(f"{Colors.GREEN}✓ API key found, using OpenAI{Colors.END}")
-        documentation = generate_with_openai(codebase, api_key)
+    if groq_api_key:
+        print(f"{Colors.GREEN}✓ Groq API key found, using Groq{Colors.END}")
+        documentation = generate_with_ai(codebase, groq_api_key)
+
+        if not documentation:
+            print(f"{Colors.YELLOW}⚠ Falling back to mock mode{Colors.END}")
+            documentation = generate_mock_documentation(codebase)
+    elif openai_api_key:
+        print(f"{Colors.GREEN}✓ OpenAI API key found, using OpenAI{Colors.END}")
+        documentation = generate_with_ai(codebase, openai_api_key)
 
         if not documentation:
             print(f"{Colors.YELLOW}⚠ Falling back to mock mode{Colors.END}")
             documentation = generate_mock_documentation(codebase)
     else:
-        print(f"{Colors.YELLOW}⚠ No API key found (OPENAI_API_KEY){Colors.END}")
+        print(f"{Colors.YELLOW}⚠ No API key found (GROQ_API_KEY or OPENAI_API_KEY){Colors.END}")
         documentation = generate_mock_documentation(codebase)
 
     # Save documentation
