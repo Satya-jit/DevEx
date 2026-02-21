@@ -16,7 +16,7 @@ def test_home_endpoint(client):
     """Test the home endpoint returns correct JSON."""
     response = client.get('/')
     assert response.status_code == 200
-    
+
     json_data = response.get_json()
     assert json_data['service'] == 'devex-sample'
     assert json_data['status'] == 'ok'
@@ -41,10 +41,10 @@ def test_products_endpoint_success(mock_get, client):
     }
     mock_response.raise_for_status = Mock()
     mock_get.return_value = mock_response
-    
+
     response = client.get('/products')
     assert response.status_code == 200
-    
+
     json_data = response.get_json()
     assert 'products' in json_data
     assert len(json_data['products']) == 2
@@ -55,7 +55,7 @@ def test_products_endpoint_api_failure(mock_get, client):
     """Test products endpoint handles API failures gracefully."""
     # Mock an API failure
     mock_get.side_effect = Exception("API unavailable")
-    
+
     response = client.get('/products')
     # Flask will return 500 for unhandled exceptions
     assert response.status_code == 500
@@ -65,10 +65,10 @@ def test_products_endpoint_api_failure(mock_get, client):
 def test_products_endpoint_timeout(mock_get, client):
     """Test that products endpoint has proper timeout."""
     mock_get.side_effect = Exception("Timeout")
-    
+
     response = client.get('/products')
     assert response.status_code == 500
-    
+
     # Verify timeout parameter was used in the call
     mock_get.assert_called_once_with("https://dummyjson.com/products", timeout=10)
 

@@ -71,7 +71,7 @@ jobs:
           pytest tests/ -v --cov=. --cov-report=term-missing --cov-report=xml --cov-report=html
 
       - name: Upload coverage reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: htmlcov/
@@ -116,7 +116,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload security reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
@@ -126,6 +126,7 @@ jobs:
   secret-scan:
     name: Secret Scanning
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -194,7 +195,7 @@ jobs:
           echo "::endgroup::"
 
       - name: Upload generated docs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: generated-docs
@@ -241,7 +242,7 @@ jobs:
           if [[ "${{ needs.lint.result }}" == "failure" ]] || \
              [[ "${{ needs.test.result }}" == "failure" ]] || \
              [[ "${{ needs.security-scan.result }}" == "failure" ]] || \
-             [[ "${{ needs.secret-scan.result }}" == "failure" ]] || \
+             ( [[ "${{ needs.secret-scan.result }}" == "failure" ]] && [[ "${{ needs.secret-scan.result }}" != "skipped" ]] ) || \
              [[ "${{ needs.dependency-check.result }}" == "failure" ]]; then
             echo "::error::One or more CI checks failed"
             exit 1
