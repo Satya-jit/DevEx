@@ -113,7 +113,8 @@ def generate_mock_documentation(codebase: dict) -> str:
 
     tech_stack = []
     if 'requirements.txt' in codebase:
-        tech_stack = [line.strip() for line in codebase['requirements.txt'].split('\n') if line.strip()]
+        lines = codebase['requirements.txt'].split('\n')
+        tech_stack = [line.strip() for line in lines if line.strip()]
 
     doc = f"""# Software Design Document (SDD)
 

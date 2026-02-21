@@ -1,7 +1,13 @@
 """Unit tests for the Flask application."""
 import pytest
 from unittest.mock import patch, Mock
-from app import app
+import sys
+import os
+
+# Add parent directory to path to import app
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from app import app  # noqa: E402
 
 
 @pytest.fixture
