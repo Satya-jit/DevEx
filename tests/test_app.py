@@ -1,4 +1,5 @@
 """Unit tests for the Flask application."""
+
 import pytest
 from unittest.mock import patch, Mock
 import sys

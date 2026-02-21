@@ -14,6 +14,7 @@ from datetime import datetime
 
 class Colors:
     """ANSI color codes for terminal output."""
+
     HEADER = "\033[95m"
     BLUE = "\033[94m"
     GREEN = "\033[92m"
@@ -39,7 +40,7 @@ def check_outdated_packages() -> Tuple[List[Dict], bool]:
             ["pip", "list", "--outdated", "--format=json"],
             capture_output=True,
             text=True,
-            check=True
+            check=True,
         )
 
         outdated = json.loads(result.stdout)
@@ -77,9 +78,7 @@ def check_vulnerabilities() -> Tuple[List[Dict], bool]:
 
     try:
         result = subprocess.run(
-            ["safety", "check", "--output", "json"],
-            capture_output=True,
-            text=True
+            ["safety", "check", "--output", "json"], capture_output=True, text=True
         )
 
         if result.returncode == 0:
@@ -128,11 +127,7 @@ def check_dependency_tree():
 
     try:
         # Try to use pipdeptree if available
-        result = subprocess.run(
-            ["pip", "check"],
-            capture_output=True,
-            text=True
-        )
+        result = subprocess.run(["pip", "check"], capture_output=True, text=True)
 
         if result.returncode == 0:
             print(f"{Colors.GREEN}✓ No dependency conflicts detected!{Colors.END}")
@@ -152,7 +147,7 @@ def generate_report(outdated: List[Dict], vulnerabilities: List[Dict]) -> Dict:
         "vulnerability_count": len(vulnerabilities),
         "outdated_packages": outdated,
         "vulnerabilities": vulnerabilities,
-        "status": "pass" if not vulnerabilities else "fail"
+        "status": "pass" if not vulnerabilities else "fail",
     }
 
     return report
