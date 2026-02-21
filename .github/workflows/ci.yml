@@ -169,7 +169,6 @@ jobs:
   ai-docs:
     name: AI Documentation Generation
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     continue-on-error: true  # Don't fail CI if API key is not available
     steps:
       - name: Checkout code
