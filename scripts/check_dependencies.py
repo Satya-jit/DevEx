@@ -14,20 +14,20 @@ from datetime import datetime
 
 class Colors:
     """ANSI color codes for terminal output."""
-    HEADER = '\033[95m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    END = '\033[0m'
-    BOLD = '\033[1m'
+    HEADER = "\033[95m"
+    BLUE = "\033[94m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    END = "\033[0m"
+    BOLD = "\033[1m"
 
 
 def print_section(title: str):
     """Print a formatted section header."""
-    print(f"\n{Colors.BOLD}{Colors.BLUE}{'=' * 60}{Colors.END}")
+    print(f"\n{Colors.BOLD}{Colors.BLUE}{"=" * 60}{Colors.END}")
     print(f"{Colors.BOLD}{Colors.BLUE}{title}{Colors.END}")
-    print(f"{Colors.BOLD}{Colors.BLUE}{'=' * 60}{Colors.END}\n")
+    print(f"{Colors.BOLD}{Colors.BLUE}{"=" * 60}{Colors.END}\n")
 
 
 def check_outdated_packages() -> Tuple[List[Dict], bool]:
@@ -50,14 +50,14 @@ def check_outdated_packages() -> Tuple[List[Dict], bool]:
 
         print(f"{Colors.YELLOW}Found {len(outdated)} outdated package(s):{Colors.END}\n")
 
-        print(f"{'Package':<20} {'Current':<15} {'Latest':<15} {'Type':<10}")
+        print(f"{"Package":<20} {"Current":<15} {"Latest":<15} {"Type":<10}")
         print("-" * 70)
 
         for pkg in outdated:
-            name = pkg['name']
-            current = pkg['version']
-            latest = pkg['latest_version']
-            pkg_type = pkg.get('latest_filetype', 'wheel')
+            name = pkg["name"]
+            current = pkg["version"]
+            latest = pkg["latest_version"]
+            pkg_type = pkg.get("latest_filetype", "wheel")
 
             print(f"{name:<20} {current:<15} {latest:<15} {pkg_type:<10}")
 
@@ -96,10 +96,10 @@ def check_vulnerabilities() -> Tuple[List[Dict], bool]:
             print(f"{Colors.RED}Found {len(vulnerabilities)} vulnerability(-ies):{Colors.END}\n")
 
             for vuln in vulnerabilities:
-                pkg_name = vuln.get('package', 'Unknown')
-                installed = vuln.get('installed_version', 'Unknown')
-                vuln_id = vuln.get('vulnerability_id', 'N/A')
-                advisory = vuln.get('advisory', 'No details available')
+                pkg_name = vuln.get("package", "Unknown")
+                installed = vuln.get("installed_version", "Unknown")
+                vuln_id = vuln.get("vulnerability_id", "N/A")
+                advisory = vuln.get("advisory", "No details available")
 
                 print(f"{Colors.RED}✗ {pkg_name} v{installed}{Colors.END}")
                 print(f"  ID: {vuln_id}")
@@ -161,7 +161,7 @@ def generate_report(outdated: List[Dict], vulnerabilities: List[Dict]) -> Dict:
 def main():
     """Main execution function."""
     print(f"\n{Colors.BOLD}{Colors.HEADER}Dependency Health Check{Colors.END}")
-    print(f"Run at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+    print(f"Run at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n")
 
     # Check for outdated packages
     outdated, has_outdated = check_outdated_packages()
@@ -178,7 +178,7 @@ def main():
     # Save report to file
     report_file = "dependency-report.json"
     try:
-        with open(report_file, 'w') as f:
+        with open(report_file, "w") as f:
             json.dump(report, f, indent=2)
         print(f"\n{Colors.BLUE}Report saved to: {report_file}{Colors.END}")
     except Exception as e:

@@ -6,10 +6,7 @@ app = Flask(__name__)
 
 @app.get("/")
 def home():
-    return jsonify({
-        "service": "devex-sample",
-        "status": "ok"
-    })
+    return jsonify({"service": "devex-sample", "status": "ok"})
 
 
 @app.get("/products")

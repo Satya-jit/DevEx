@@ -14,12 +14,13 @@ from typing import Optional
 
 class Colors:
     """ANSI color codes."""
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    END = '\033[0m'
-    BOLD = '\033[1m'
+
+    BLUE = "\033[94m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    RED = "\033[91m"
+    END = "\033[0m"
+    BOLD = "\033[1m"
 
 
 def read_codebase() -> dict:
@@ -27,16 +28,16 @@ def read_codebase() -> dict:
     codebase = {}
 
     files_to_read = [
-        'app.py',
-        'tests/test_app.py',
-        'requirements.txt',
-        'Dockerfile',
-        'docker-compose.yml'
+        "app.py",
+        "tests/test_app.py",
+        "requirements.txt",
+        "Dockerfile",
+        "docker-compose.yml",
     ]
 
     for file_path in files_to_read:
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 codebase[file_path] = f.read()
         except FileNotFoundError:
             print(f"{Colors.YELLOW}⚠ File not found: {file_path}{Colors.END}")
@@ -104,21 +105,21 @@ def generate_mock_documentation(codebase: dict) -> str:
     print(f"{Colors.YELLOW}→ Running in MOCK mode (no API key)...{Colors.END}")
 
     endpoints = []
-    if 'app.py' in codebase:
+    if "app.py" in codebase:
         # Simple parsing to find endpoints
-        for line in codebase['app.py'].split('\n'):
-            if '@app.get' in line or '@app.post' in line:
+        for line in codebase["app.py"].split("\n"):
+            if "@app.get" in line or "@app.post" in line:
                 endpoints.append(line.strip())
 
     tech_stack = []
-    if 'requirements.txt' in codebase:
-        lines = codebase['requirements.txt'].split('\n')
+    if "requirements.txt" in codebase:
+        lines = codebase["requirements.txt"].split("\n")
         tech_stack = [line.strip() for line in lines if line.strip()]
 
     doc = f"""# Software Design Document (SDD)
 
 **Project:** DevEx Sample Service
-**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Version:** 1.0
 **Status:** Auto-generated (Mock Mode)
 
@@ -180,9 +181,9 @@ automated testing, and CI/CD pipelines.
 
     # Add endpoints
     if endpoints:
-        endpoint_list = '\n'.join(f'- `{endpoint}`' for endpoint in endpoints)
+        endpoint_list = "\n".join(f"- `{endpoint}`" for endpoint in endpoints)
     else:
-        endpoint_list = '- / (Home endpoint)\n- /products (Products endpoint)'
+        endpoint_list = "- / (Home endpoint)\n- /products (Products endpoint)"
 
     doc += endpoint_list + """
 
@@ -223,9 +224,9 @@ automated testing, and CI/CD pipelines.
 
     # Add tech stack
     if tech_stack:
-        tech_list = '\n'.join(f'- {tech}' for tech in tech_stack[:10])
+        tech_list = "\n".join(f"- {tech}" for tech in tech_stack[:10])
     else:
-        tech_list = '- Flask 3.0.0\n- Requests 2.31.0'
+        tech_list = "- Flask 3.0.0\n- Requests 2.31.0"
 
     doc += tech_list + """
 
@@ -254,7 +255,7 @@ curl http://localhost:5000/
 ```
 
 ### Environment Variables
-- `FLASK_ENV`: Set to 'development' or 'production'
+- `FLASK_ENV`: Set to "development" or "production"
 - `OPENAI_API_KEY`: (Optional) For AI documentation generation
 
 ### Health Checks
@@ -348,7 +349,7 @@ def save_documentation(content: str, filename: str = "docs/SDD.md"):
         # Ensure docs directory exists
         Path("docs").mkdir(exist_ok=True)
 
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             f.write(content)
 
         print(f"{Colors.GREEN}✓ Documentation saved to: {filename}{Colors.END}")
@@ -369,7 +370,7 @@ def main():
     print(f"{Colors.GREEN}✓ Read {len(codebase)} files{Colors.END}\n")
 
     # Check for API key
-    api_key = os.getenv('OPENAI_API_KEY')
+    api_key = os.getenv("OPENAI_API_KEY")
 
     if api_key:
         print(f"{Colors.GREEN}✓ API key found, using OpenAI{Colors.END}")
@@ -402,7 +403,7 @@ def generate_test_plan(codebase: dict) -> str:
     return f"""# Test Plan
 
 **Project:** DevEx Sample Service
-**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+**Generated:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Version:** 1.0
 
 ---
