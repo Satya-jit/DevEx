@@ -2,7 +2,7 @@
 
 A showcase of modern **Developer Experience (DevEx)** practices around a simple Flask REST API. This project demonstrates how to build a frictionless developer workflow with automation, CI/CD, and AI-powered tooling.
 
-[![CI Pipeline](https://github.com/YOUR_USERNAME/devex-sample/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/devex-sample/actions)
+[![CI Pipeline](https://github.com/Satya-jit/DevEx/actions/workflows/ci.yml/badge.svg)](https://github.com/Satya-jit/DevEx/actions)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -32,8 +32,8 @@ A showcase of modern **Developer Experience (DevEx)** practices around a simple 
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/devex-sample.git
-cd devex-sample
+git clone https://github.com/Satya-jit/DevEx.git
+cd DevEx
 
 # 2. Install development dependencies (optional, for local testing)
 make install-dev
